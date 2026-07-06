@@ -1,0 +1,10 @@
+streamlit
+google-generativeai
+langchain-google-genai
+langchain-chroma
+langchain-community
+langchain
+pydantic
+opencv-python-headless
+numpy
+python-dotenv
