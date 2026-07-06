@@ -1,6 +1,10 @@
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+try:
+    __import__('pysqlite3')
+    import sys
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    # On Windows, pysqlite3 won't be found, so it falls back to native sqlite3 safely
+    pass
 import streamlit as st
 import os
 from dotenv import load_dotenv
