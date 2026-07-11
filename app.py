@@ -15,9 +15,15 @@ from rag_module import MedicalRAGEngine
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
-# 2. Initialize our specialized engines
-vision_engine = MedicalVisionEngine()
-rag_engine = MedicalRAGEngine(api_key=api_key)
+# 2. Initialize our specialized engines using Streamlit resource caching
+@st.cache_resource
+def get_engines(api_key):
+    vision = MedicalVisionEngine()
+    rag = MedicalRAGEngine(api_key=api_key)
+    return vision, rag
+
+# Call the cached function
+vision_engine, rag_engine = get_engines(api_key)
 
 st.set_page_config(
     page_title="Medical AI Copilot",
