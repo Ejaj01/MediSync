@@ -1,7 +1,7 @@
 from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
-
+import chromadb  # <-- IMPORT THIS HERE
 
 class MedicalRAGEngine:
     def __init__(self, api_key=None):
@@ -10,6 +10,10 @@ class MedicalRAGEngine:
             model="gemini-embedding-001",
             google_api_key=api_key
         )
+        
+        # FIX: Clear Chroma's system cache to prevent the Streamlit rerun crash
+        chromadb.api.client.SharedSystemClient.clear_system_cache()
+        
         self.db = Chroma(persist_directory="./chroma_db", embedding_function=self.embeddings)
         print("Medical RAG Engine initialized against production ChromaDB storage.")
 
@@ -20,7 +24,6 @@ class MedicalRAGEngine:
             return "\n\n".join([doc.page_content for doc in docs])
         return "General clinical safety protocols apply. No specific guidelines found."
 
-    # Keep generate_doctor_report() exactly as it is now...
 
     def generate_doctor_report(self, finding, size_mm, location, api_key=None):
         reference_context = self._retrieve_medical_context(finding)
