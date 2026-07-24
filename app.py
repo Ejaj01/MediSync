@@ -122,6 +122,7 @@ with col2:
                 finding=primary_finding["class_name"],
                 size_mm=primary_finding["estimated_size_mm"],
                 location=primary_finding["location_tags"],
+                specialty="Pulmonology",  # <-- Add your specialty subfolder name here!
                 api_key=api_key
             )
 

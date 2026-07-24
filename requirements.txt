@@ -8,4 +8,5 @@ pydantic
 opencv-python-headless
 numpy
 python-dotenv
-pysqlite3-binary
+#pysqlite3-binary
+pypdf
